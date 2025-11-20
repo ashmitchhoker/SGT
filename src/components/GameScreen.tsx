@@ -24,11 +24,11 @@ export default function GameScreen({
 }: GameScreenProps) {
   const isDisabled = feedback !== null;
   const videoRef = useRef<HTMLVideoElement>(null);
-  
+
   // Get base URL for GitHub Pages (e.g., /SGT/)
-  const baseUrl = import.meta.env.BASE_URL || '/';
-  const mediaSrc = currentItem.src.startsWith('/') 
-    ? `${baseUrl}${currentItem.src.slice(1)}` 
+  const baseUrl = import.meta.env.BASE_URL || "/";
+  const mediaSrc = currentItem.src.startsWith("/")
+    ? `${baseUrl}${currentItem.src.slice(1)}`
     : `${baseUrl}${currentItem.src}`;
 
   // Auto-play video when it changes
@@ -75,17 +75,11 @@ export default function GameScreen({
                 src={encodeURI(mediaSrc)}
                 controls
                 autoPlay
-                muted
                 playsInline
                 className="max-w-full max-h-full object-contain"
                 preload="auto"
                 onError={(e) => {
-                  console.error(
-                    "Video load error:",
-                    e,
-                    "Path:",
-                    mediaSrc
-                  );
+                  console.error("Video load error:", e, "Path:", mediaSrc);
                   const target = e.target as HTMLVideoElement;
                   const parent = target.parentElement;
                   if (parent) {
