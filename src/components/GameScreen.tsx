@@ -24,6 +24,12 @@ export default function GameScreen({
 }: GameScreenProps) {
   const isDisabled = feedback !== null;
   const videoRef = useRef<HTMLVideoElement>(null);
+  
+  // Get base URL for GitHub Pages (e.g., /SGT/)
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  const mediaSrc = currentItem.src.startsWith('/') 
+    ? `${baseUrl}${currentItem.src.slice(1)}` 
+    : `${baseUrl}${currentItem.src}`;
 
   // Auto-play video when it changes
   useEffect(() => {
@@ -34,7 +40,7 @@ export default function GameScreen({
         // If autoplay is blocked, video will still show and user can click play
       });
     }
-  }, [currentItem.src, currentIndex]);
+  }, [mediaSrc, currentIndex]);
 
   return (
     <div className="flex flex-col items-center space-y-6 animate-fadeIn">
@@ -52,11 +58,11 @@ export default function GameScreen({
           {currentItem.type === "image" ? (
             <div className="relative w-full h-[400px] md:h-[500px] bg-slate-900/50 flex items-center justify-center">
               <img
-                src={encodeURI(currentItem.src)}
+                src={encodeURI(mediaSrc)}
                 alt={currentItem.caption}
                 className="max-w-full max-h-full object-contain"
                 onError={(e) => {
-                  console.error("Image load error:", currentItem.src);
+                  console.error("Image load error:", mediaSrc);
                   const target = e.target as HTMLImageElement;
                   target.style.display = "none";
                 }}
@@ -66,9 +72,10 @@ export default function GameScreen({
             <div className="relative w-full h-[400px] md:h-[500px] bg-slate-900/50 flex items-center justify-center">
               <video
                 ref={videoRef}
-                src={encodeURI(currentItem.src)}
+                src={encodeURI(mediaSrc)}
                 controls
                 autoPlay
+                muted
                 playsInline
                 className="max-w-full max-h-full object-contain"
                 preload="auto"
@@ -77,7 +84,7 @@ export default function GameScreen({
                     "Video load error:",
                     e,
                     "Path:",
-                    currentItem.src
+                    mediaSrc
                   );
                   const target = e.target as HTMLVideoElement;
                   const parent = target.parentElement;
@@ -85,7 +92,7 @@ export default function GameScreen({
                     target.style.display = "none";
                     const errorDiv = document.createElement("div");
                     errorDiv.className = "text-red-400 p-4 text-center";
-                    errorDiv.textContent = `Failed to load video: ${currentItem.src}`;
+                    errorDiv.textContent = `Failed to load video: ${mediaSrc}`;
                     parent.appendChild(errorDiv);
                   }
                 }}
