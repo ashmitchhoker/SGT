@@ -34,7 +34,11 @@ export default function GameScreen({
   // Auto-play video when it changes
   useEffect(() => {
     if (currentItem.type === "video" && videoRef.current) {
-      videoRef.current.load(); // Reload video source
+      // Only load if not already loaded to avoid unnecessary reloads
+      // This preserves browser cache
+      if (videoRef.current.readyState === 0) {
+        videoRef.current.load();
+      }
       videoRef.current.play().catch((error) => {
         console.log("Autoplay prevented:", error);
         // If autoplay is blocked, video will still show and user can click play
@@ -77,7 +81,8 @@ export default function GameScreen({
                 autoPlay
                 playsInline
                 className="max-w-full max-h-full object-contain"
-                preload="auto"
+                preload="metadata"
+                crossOrigin="anonymous"
                 onError={(e) => {
                   console.error("Video load error:", e, "Path:", mediaSrc);
                   const target = e.target as HTMLVideoElement;

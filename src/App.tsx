@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { mediaItems, MediaItem } from "./data/mediaItems";
 import StartScreen from "./components/StartScreen";
 import GameScreen from "./components/GameScreen";
@@ -59,6 +59,30 @@ function App() {
 
   const totalItems = selectedItems.length;
   const maxScore = totalItems * 10;
+
+  // Preload all media files when items are selected to improve performance
+  useEffect(() => {
+    if (selectedItems.length > 0) {
+      const baseUrl = import.meta.env.BASE_URL || "/";
+
+      selectedItems.forEach((item) => {
+        const mediaSrc = item.src.startsWith("/")
+          ? `${baseUrl}${item.src.slice(1)}`
+          : `${baseUrl}${item.src}`;
+        const encodedSrc = encodeURI(mediaSrc);
+
+        if (item.type === "image") {
+          const img = new Image();
+          img.src = encodedSrc;
+        } else if (item.type === "video") {
+          const video = document.createElement("video");
+          video.preload = "metadata"; // Load metadata for faster display
+          video.src = encodedSrc;
+          // Don't add to DOM, just preload for cache
+        }
+      });
+    }
+  }, [selectedItems]);
 
   const startGame = () => {
     // Select 7 random items each time game starts
