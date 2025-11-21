@@ -1,4 +1,4 @@
-import { Trophy, RotateCcw, AlertTriangle, ExternalLink } from 'lucide-react';
+import { Trophy, RotateCcw, FileText, ExternalLink } from "lucide-react";
 
 interface ResultsScreenProps {
   score: number;
@@ -7,15 +7,24 @@ interface ResultsScreenProps {
   onRestart: () => void;
 }
 
-export default function ResultsScreen({ score, maxScore, totalItems, onRestart }: ResultsScreenProps) {
+export default function ResultsScreen({
+  score,
+  maxScore,
+  totalItems,
+  onRestart,
+}: ResultsScreenProps) {
   const percentage = (score / maxScore) * 100;
 
   const getPerformanceMessage = () => {
-    if (percentage === 100) return { text: 'Perfect Score!', color: 'text-yellow-400', emoji: '🏆' };
-    if (percentage >= 80) return { text: 'Excellent Work!', color: 'text-green-400', emoji: '🌟' };
-    if (percentage >= 60) return { text: 'Good Job!', color: 'text-blue-400', emoji: '👍' };
-    if (percentage >= 40) return { text: 'Keep Learning!', color: 'text-orange-400', emoji: '📚' };
-    return { text: 'Try Again!', color: 'text-red-400', emoji: '💪' };
+    if (percentage === 100)
+      return { text: "Perfect Score!", color: "text-yellow-400", emoji: "🏆" };
+    if (percentage >= 80)
+      return { text: "Excellent Work!", color: "text-green-400", emoji: "🌟" };
+    if (percentage >= 60)
+      return { text: "Good Job!", color: "text-blue-400", emoji: "👍" };
+    if (percentage >= 40)
+      return { text: "Keep Learning!", color: "text-orange-400", emoji: "📚" };
+    return { text: "Try Again!", color: "text-red-400", emoji: "💪" };
   };
 
   const performance = getPerformanceMessage();
@@ -42,11 +51,9 @@ export default function ResultsScreen({ score, maxScore, totalItems, onRestart }
           <div className="text-7xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">
             {score}
           </div>
-          <div className="text-slate-400 text-lg">
-            out of {maxScore} points
-          </div>
+          <div className="text-slate-400 text-lg">out of {maxScore} points</div>
           <div className="mt-4 text-slate-300">
-            {totalItems - (score / 10)} incorrect answers
+            {totalItems - score / 10} incorrect answers
           </div>
         </div>
       </div>
@@ -61,7 +68,9 @@ export default function ResultsScreen({ score, maxScore, totalItems, onRestart }
           <div className="text-sm text-slate-400">Correct</div>
         </div>
         <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-          <div className="text-2xl font-bold text-blue-400">{percentage.toFixed(0)}%</div>
+          <div className="text-2xl font-bold text-blue-400">
+            {percentage.toFixed(0)}%
+          </div>
           <div className="text-sm text-slate-400">Accuracy</div>
         </div>
       </div>
@@ -76,20 +85,21 @@ export default function ResultsScreen({ score, maxScore, totalItems, onRestart }
         </button>
 
         <a
-          href="https://cybercrime.gov.in/webform/crmcondi.aspx"
+          href="https://share.google/xi13oa8MUhWqRIfKt"
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative px-6 py-4 bg-gradient-to-r from-red-500 to-red-600 rounded-xl font-semibold text-lg text-white shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-3"
+          className="group relative px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl font-semibold text-lg text-white shadow-lg shadow-blue-500/50 hover:shadow-blue-500/70 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-3"
         >
-          <AlertTriangle className="w-5 h-5" />
-          Report Crime
+          <FileText className="w-5 h-5" />
+          Digital Media Ethics Code 2021
           <ExternalLink className="w-4 h-4" />
         </a>
       </div>
 
       <div className="bg-blue-500/10 border border-blue-400/30 rounded-xl p-4 max-w-2xl">
         <p className="text-blue-300 text-sm">
-          If you encounter cybercrime or unethical content online, report it immediately to the authorities using the link above.
+          Learn more about digital media ethics and IT intermediary guidelines
+          by reading the official rules document.
         </p>
       </div>
     </div>
