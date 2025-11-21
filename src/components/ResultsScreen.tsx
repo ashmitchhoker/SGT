@@ -154,7 +154,7 @@ export default function ResultsScreen({
         </button>
 
         <a
-          href="/Information-Technology-Intermediary-Guidelines-and-Digital-Media-Ethics-Code-Rules-2021-update.pdf"
+          href="https://share.google/xi13oa8MUhWqRIfKt"
           target="_blank"
           rel="noopener noreferrer"
           className="group flex-1 relative overflow-hidden px-8 py-4 rounded-2xl font-bold text-lg text-white transition-all duration-300 hover:scale-105 active:scale-95"
