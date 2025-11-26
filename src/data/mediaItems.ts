@@ -127,26 +127,26 @@ export const mediaItems: MediaItem[] = [
     type: "image",
     src: "/images/5.jpeg",
     caption: "Image 5",
-    answer: false,
-  },
-  {
-    type: "image",
-    src: "/images/6.jpeg",
-    caption: "Image 6",
     answer: true,
   },
+  // {
+  //   type: "image",
+  //   src: "/images/6.jpeg",
+  //   caption: "Image 6",
+  //   answer: true,
+  // },
   {
     type: "image",
     src: "/images/7.jpeg",
     caption: "Image 7",
-    answer: false,
-  },
-  {
-    type: "image",
-    src: "/images/8.jpeg",
-    caption: "Image 8",
     answer: true,
   },
+  // {
+  //   type: "image",
+  //   src: "/images/8.jpeg",
+  //   caption: "Image 8",
+  //   answer: true,
+  // },
   {
     type: "image",
     src: "/images/9.jpeg",
