@@ -163,7 +163,7 @@ export default function GameScreen({
 
           <div className="p-8 space-y-6">
             <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
-              Should you upload this content?
+              Should this type of content be shared online?
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
