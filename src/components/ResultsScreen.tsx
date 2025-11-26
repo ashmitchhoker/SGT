@@ -1,16 +1,17 @@
 import {
-  Trophy,
   RotateCcw,
   FileText,
   ExternalLink,
   Star,
   Target,
+  CalendarDays,
 } from "lucide-react";
 
 interface ResultsScreenProps {
   score: number;
   maxScore: number;
   totalItems: number;
+  dailyPlayCount: number;
   onRestart: () => void;
 }
 
@@ -18,6 +19,7 @@ export default function ResultsScreen({
   score,
   maxScore,
   totalItems,
+  dailyPlayCount,
   onRestart,
 }: ResultsScreenProps) {
   const percentage = maxScore > 0 ? (score / maxScore) * 100 : 0;
@@ -112,12 +114,12 @@ export default function ResultsScreen({
                   </div>
                 </div>
                 <div className="bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 border border-cyan-400/50 rounded-2xl p-6 hover:scale-105 transition-transform">
-                  <Trophy className="w-8 h-8 text-cyan-400 mx-auto mb-2" />
+                  <CalendarDays className="w-8 h-8 text-cyan-400 mx-auto mb-2" />
                   <div className="text-3xl font-black text-cyan-300">
-                    {percentage.toFixed(0)}%
+                    {dailyPlayCount}
                   </div>
                   <div className="text-xs text-cyan-200/70 uppercase tracking-wider mt-1">
-                    Accuracy
+                    Plays Today
                   </div>
                 </div>
               </div>

@@ -52,6 +52,12 @@ function selectRandomItems(items: MediaItem[]): MediaItem[] {
   return shuffleArray(selected).slice(0, TOTAL_QUESTIONS);
 }
 
+const DAILY_COUNT_STORAGE_KEY = "dailyGameCounts";
+
+function getTodayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
 function App() {
   const [gameState, setGameState] = useState<GameState>("start");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -61,6 +67,7 @@ function App() {
   );
   const [answeredItems, setAnsweredItems] = useState<boolean[]>([]);
   const [selectedItems, setSelectedItems] = useState<MediaItem[]>([]);
+  const [dailyPlayCount, setDailyPlayCount] = useState(0);
 
   const totalItems = selectedItems.length;
   const maxScore = totalItems * POINTS_PER_QUESTION;
@@ -89,6 +96,38 @@ function App() {
     }
   }, [selectedItems]);
 
+  useEffect(() => {
+    const todayKey = getTodayKey();
+    try {
+      const storedCounts = localStorage.getItem(DAILY_COUNT_STORAGE_KEY);
+      if (storedCounts) {
+        const parsed = JSON.parse(storedCounts) as Record<string, number>;
+        setDailyPlayCount(parsed[todayKey] || 0);
+      } else {
+        setDailyPlayCount(0);
+      }
+    } catch (error) {
+      console.error("Failed to load daily play count:", error);
+      setDailyPlayCount(0);
+    }
+  }, []);
+
+  const incrementDailyPlayCount = () => {
+    const todayKey = getTodayKey();
+    try {
+      const storedCounts = localStorage.getItem(DAILY_COUNT_STORAGE_KEY);
+      const parsed: Record<string, number> = storedCounts
+        ? JSON.parse(storedCounts)
+        : {};
+      const updatedCount = (parsed[todayKey] || 0) + 1;
+      parsed[todayKey] = updatedCount;
+      localStorage.setItem(DAILY_COUNT_STORAGE_KEY, JSON.stringify(parsed));
+      setDailyPlayCount(updatedCount);
+    } catch (error) {
+      console.error("Failed to update daily play count:", error);
+    }
+  };
+
   const startGame = () => {
     const randomItems = selectRandomItems(mediaItems);
     setSelectedItems(randomItems);
@@ -115,6 +154,7 @@ function App() {
       setFeedback(null);
 
       if (currentIndex >= totalItems - 1) {
+        incrementDailyPlayCount();
         setGameState("results");
       } else {
         setCurrentIndex((prev) => prev + 1);
@@ -159,6 +199,7 @@ function App() {
             score={score}
             maxScore={maxScore}
             totalItems={totalItems}
+            dailyPlayCount={dailyPlayCount}
             onRestart={restartGame}
           />
         )}
