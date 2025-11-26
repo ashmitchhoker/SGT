@@ -2,9 +2,15 @@ import { Scale, Lock, Eye, Play, Zap, Shield } from "lucide-react";
 
 interface StartScreenProps {
   onStart: () => void;
+  totalQuestions: number;
+  maxScore: number;
 }
 
-export default function StartScreen({ onStart }: StartScreenProps) {
+export default function StartScreen({
+  onStart,
+  totalQuestions,
+  maxScore,
+}: StartScreenProps) {
   return (
     <div className="flex flex-col items-center justify-center text-center space-y-8 animate-fadeIn">
       <div className="relative mb-4">
@@ -92,13 +98,15 @@ export default function StartScreen({ onStart }: StartScreenProps) {
         style={{ animationDelay: "400ms" }}
       >
         <div className="bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 backdrop-blur-sm rounded-lg p-4 border border-emerald-400/40 hover:scale-105 transition-transform">
-          <div className="text-2xl font-black text-emerald-300">7</div>
+          <div className="text-2xl font-black text-emerald-300">
+            {totalQuestions}
+          </div>
           <div className="text-xs text-slate-400 mt-1 uppercase tracking-wider">
             Random Scenarios
           </div>
         </div>
         <div className="bg-gradient-to-br from-teal-500/20 to-teal-600/20 backdrop-blur-sm rounded-lg p-4 border border-teal-400/40 hover:scale-105 transition-transform">
-          <div className="text-2xl font-black text-teal-300">70</div>
+          <div className="text-2xl font-black text-teal-300">{maxScore}</div>
           <div className="text-xs text-slate-400 mt-1 uppercase tracking-wider">
             Points Possible
           </div>

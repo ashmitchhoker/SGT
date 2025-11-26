@@ -20,8 +20,9 @@ export default function ResultsScreen({
   totalItems,
   onRestart,
 }: ResultsScreenProps) {
-  const percentage = (score / maxScore) * 100;
-  const correctAnswers = score / 10;
+  const percentage = maxScore > 0 ? (score / maxScore) * 100 : 0;
+  const pointsPerQuestion = totalItems > 0 ? maxScore / totalItems : 0;
+  const correctAnswers = pointsPerQuestion > 0 ? score / pointsPerQuestion : 0;
 
   const getPerformanceMessage = () => {
     if (percentage === 100)
