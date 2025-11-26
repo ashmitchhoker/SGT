@@ -11,8 +11,8 @@ export const mediaItems: MediaItem[] = [
   {
     type: "video",
     src: "/videos/1.mp4",
-    caption: "Cybersecurity Dashboard",
-    answer: false,
+    caption: "Chor ka pakadna",
+    answer: true,
   },
   {
     type: "video",
