@@ -53,6 +53,8 @@ function selectRandomItems(items: MediaItem[]): MediaItem[] {
 }
 
 const DAILY_COUNT_STORAGE_KEY = "dailyGameCounts";
+const GET_COUNT_URL = "/.netlify/functions/get-daily-count";
+const INCREMENT_COUNT_URL = "/.netlify/functions/increment-daily-count";
 
 function getTodayKey() {
   return new Date().toISOString().slice(0, 10);
@@ -98,33 +100,69 @@ function App() {
 
   useEffect(() => {
     const todayKey = getTodayKey();
-    try {
-      const storedCounts = localStorage.getItem(DAILY_COUNT_STORAGE_KEY);
-      if (storedCounts) {
-        const parsed = JSON.parse(storedCounts) as Record<string, number>;
-        setDailyPlayCount(parsed[todayKey] || 0);
-      } else {
-        setDailyPlayCount(0);
+
+    // Try global count first (Netlify Function). Fallback to localStorage.
+    const fetchGlobalCount = async () => {
+      try {
+        const res = await fetch(GET_COUNT_URL, { cache: "no-store" });
+        if (res.ok) {
+          const json = (await res.json()) as { date: string; count: number };
+          if (json && typeof json.count === "number") {
+            setDailyPlayCount(json.count);
+            return;
+          }
+        }
+        // If response not ok, fallback
+        throw new Error(`GET count failed: ${res.status}`);
+      } catch (err) {
+        try {
+          const storedCounts = localStorage.getItem(DAILY_COUNT_STORAGE_KEY);
+          if (storedCounts) {
+            const parsed = JSON.parse(storedCounts) as Record<string, number>;
+            setDailyPlayCount(parsed[todayKey] || 0);
+          } else {
+            setDailyPlayCount(0);
+          }
+        } catch (error) {
+          console.error("Failed to load daily play count (fallback):", error);
+          setDailyPlayCount(0);
+        }
       }
-    } catch (error) {
-      console.error("Failed to load daily play count:", error);
-      setDailyPlayCount(0);
-    }
+    };
+
+    fetchGlobalCount();
   }, []);
 
-  const incrementDailyPlayCount = () => {
+  const incrementDailyPlayCount = async () => {
     const todayKey = getTodayKey();
+    // Try global increment first
     try {
-      const storedCounts = localStorage.getItem(DAILY_COUNT_STORAGE_KEY);
-      const parsed: Record<string, number> = storedCounts
-        ? JSON.parse(storedCounts)
-        : {};
-      const updatedCount = (parsed[todayKey] || 0) + 1;
-      parsed[todayKey] = updatedCount;
-      localStorage.setItem(DAILY_COUNT_STORAGE_KEY, JSON.stringify(parsed));
-      setDailyPlayCount(updatedCount);
+      const res = await fetch(INCREMENT_COUNT_URL, { method: "POST" });
+      if (res.ok) {
+        const json = (await res.json()) as { date: string; count: number };
+        if (json && typeof json.count === "number") {
+          setDailyPlayCount(json.count);
+          return;
+        }
+      }
+      throw new Error(`POST increment failed: ${res.status}`);
     } catch (error) {
-      console.error("Failed to update daily play count:", error);
+      console.warn("Falling back to localStorage for daily count:", error);
+      try {
+        const storedCounts = localStorage.getItem(DAILY_COUNT_STORAGE_KEY);
+        const parsed: Record<string, number> = storedCounts
+          ? JSON.parse(storedCounts)
+          : {};
+        const updatedCount = (parsed[todayKey] || 0) + 1;
+        parsed[todayKey] = updatedCount;
+        localStorage.setItem(DAILY_COUNT_STORAGE_KEY, JSON.stringify(parsed));
+        setDailyPlayCount(updatedCount);
+      } catch (fallbackErr) {
+        console.error(
+          "Failed to update daily play count (fallback):",
+          fallbackErr
+        );
+      }
     }
   };
 
