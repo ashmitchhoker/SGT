@@ -80,6 +80,24 @@ export const mediaItems: MediaItem[] = [
     caption: "Randi Saali Hatt",
     answer: true,
   },
+  {
+    type: "video",
+    src: "/videos/13.mp4",
+    caption: "laddoo",
+    answer: true,
+  },
+  {
+    type: "video",
+    src: "/videos/14.mp4",
+    caption: "Hello",
+    answer: false,
+  },
+  {
+    type: "video",
+    src: "/videos/15.mp4",
+    caption: "Indian Army Joke",
+    answer: true,
+  },
   // Images (39 placeholders - replace with actual image paths)
   {
     type: "image",
@@ -129,12 +147,12 @@ export const mediaItems: MediaItem[] = [
     caption: "Image 8",
     answer: true,
   },
-  // {
-  //   type: "image",
-  //   src: "/images/image9.jpg",
-  //   caption: "Image 9",
-  //   answer: true,
-  // },
+  {
+    type: "image",
+    src: "/images/9.jpeg",
+    caption: "Drugs",
+    answer: true,
+  },
   // {
   //   type: "image",
   //   src: "/images/image10.jpg",
