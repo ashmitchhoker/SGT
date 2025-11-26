@@ -177,7 +177,7 @@ export default function GameScreen({
                 <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-orange-700 opacity-0 group-hover:opacity-50 blur-xl transition-opacity"></div>
                 <div className="relative flex items-center justify-center gap-3">
                   <ThumbsDown className="w-5 h-5 group-hover:rotate-12 group-active:rotate-0 transition-transform" />
-                  <span>No - Unethical</span>
+                  <span>No</span>
                 </div>
               </button>
 
@@ -191,7 +191,7 @@ export default function GameScreen({
                 <div className="absolute -inset-1 bg-gradient-to-r from-teal-600 to-cyan-700 opacity-0 group-hover:opacity-50 blur-xl transition-opacity"></div>
                 <div className="relative flex items-center justify-center gap-3">
                   <ThumbsUp className="w-5 h-5 group-hover:-rotate-12 group-active:rotate-0 transition-transform" />
-                  <span>Yes - Acceptable</span>
+                  <span>Yes</span>
                 </div>
               </button>
             </div>
