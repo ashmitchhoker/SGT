@@ -155,13 +155,13 @@ export const mediaItems: MediaItem[] = [
   },
   {
     type: "image",
-    src: "/images/10.jepg",
+    src: "/images/10.jpeg",
     caption: "Image 10",
     answer: false,
   },
   {
     type: "image",
-    src: "/images/11.jepg",
+    src: "/images/11.jpeg",
     caption: "Image 11",
     answer: false,
   },
