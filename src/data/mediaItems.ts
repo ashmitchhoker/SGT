@@ -153,18 +153,18 @@ export const mediaItems: MediaItem[] = [
     caption: "Drugs",
     answer: true,
   },
-  // {
-  //   type: "image",
-  //   src: "/images/image10.jpg",
-  //   caption: "Image 10",
-  //   answer: false,
-  // },
-  // {
-  //   type: "image",
-  //   src: "/images/image11.jpg",
-  //   caption: "Image 11",
-  //   answer: false,
-  // },
+  {
+    type: "image",
+    src: "/images/10.jepg",
+    caption: "Image 10",
+    answer: false,
+  },
+  {
+    type: "image",
+    src: "/images/11.jepg",
+    caption: "Image 11",
+    answer: false,
+  },
   // {
   //   type: "image",
   //   src: "/images/image12.jpg",
