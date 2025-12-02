@@ -1,5 +1,5 @@
 import { Scale, Lock, Eye, Play, Zap, Shield } from "lucide-react";
-
+ 
 interface StartScreenProps {
   onStart: () => void;
   totalQuestions: number;
